@@ -21,7 +21,7 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-development:
+development: &development
   <<: *default
   database: apmops_on_rails_development
 
@@ -29,15 +29,15 @@ development:
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  #username: apmops_on_rails
+  username: postgres
 
   # The password associated with the postgres role (username).
-  #password:
+  password: apmops_on_rails_app
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
-  #host: localhost
+  host: localhost
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
@@ -56,7 +56,7 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
+  <<: *development
   database: apmops_on_rails_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
@@ -75,11 +75,12 @@ test:
 #
 # You can use this database configuration with:
 #
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
+
 production:
-  <<: *default
-  database: apmops_on_rails_production
-  username: apmops_on_rails
-  password: <%= ENV['APMOPS_ON_RAILS_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+
+#production:
+#  <<: *default
+#  database: apmops_on_rails_production
+#  username: apmops_on_rails
+#  password: <%= ENV['APMOPS_ON_RAILS_DATABASE_PASSWORD'] %>
