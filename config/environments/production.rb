@@ -93,4 +93,6 @@ Rails.application.configure do
       password:             Rails.application.credentials.dig(:gmail, :password),
       authentication:       'plain',
       enable_starttls_auto: true }
+
+  routes.default_url_options = { host: 'apmops-on-rails.herokuapp.com', protocol: 'https' }
 end
