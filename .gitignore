@@ -26,3 +26,5 @@
 /.idea *
 /public/system/*
 .rvmrc
+
+.DS_Store
