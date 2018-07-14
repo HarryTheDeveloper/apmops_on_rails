@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2018_07_14_081528) do
   end
 
   create_table "answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "type", null: false
+    t.integer "question_type", null: false
     t.integer "int_ans"
     t.float "flt_ans"
     t.string "str_ans"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 2018_07_14_081528) do
   create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "content"
     t.integer "difficulty"
-    t.integer "type", null: false
+    t.integer "question_type", null: false
     t.integer "unit"
     t.integer "mark"
     t.uuid "paper_id"
