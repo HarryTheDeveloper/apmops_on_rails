@@ -1,9 +1,10 @@
 class AnswersController < ApplicationController
+  before_action :set_question, only: [:index, :create]
   before_action :set_answer, only: [:show, :update, :destroy]
 
   # GET /answers
   def index
-    @answers = Answer.all
+    @answers = [@question.answer]
 
     render json: @answers
   end
@@ -18,6 +19,7 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
 
     if @answer.save
+      @question.answer = @answer
       render json: @answer, status: :created, location: @answer
     else
       render json: @answer.errors, status: :unprocessable_entity
@@ -39,6 +41,10 @@ class AnswersController < ApplicationController
   end
 
   private
+    def set_question
+      @question = Question.find(params[:question_id])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_answer
       @answer = Answer.find(params[:id])

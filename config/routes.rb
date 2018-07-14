@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   end
 
   resources :papers do
-    resources :questions do
-      resources :answers
+    resources :questions, shallow: true do
+      resources :answers, shallow: true
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

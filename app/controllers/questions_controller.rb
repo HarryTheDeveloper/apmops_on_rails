@@ -1,9 +1,10 @@
 class QuestionsController < ApplicationController
+  before_action :set_paper, only: [:index, :create]
   before_action :set_question, only: [:show, :update, :destroy]
 
-  # GET /questions
+  # GET    /papers/:paper_id/questions
   def index
-    @questions = Question.all
+    @questions = @paper.questions
 
     render json: @questions
   end
@@ -13,9 +14,9 @@ class QuestionsController < ApplicationController
     render json: @question
   end
 
-  # POST /questions
+  # POST   /papers/:paper_id/questions
   def create
-    @question = Question.new(question_params)
+    @question = @paper.questions.new(question_params)
 
     if @question.save
       render json: @question, status: :created, location: @question
@@ -39,6 +40,10 @@ class QuestionsController < ApplicationController
   end
 
   private
+    def set_paper
+      @paper = Paper.find(params[:paper_id])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_question
       @question = Question.find(params[:id])
