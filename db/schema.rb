@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_11_163718) do
+ActiveRecord::Schema.define(version: 2018_07_14_081528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -47,6 +47,45 @@ ActiveRecord::Schema.define(version: 2018_07_11_163718) do
     t.index ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true
   end
 
+  create_table "answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "type", null: false
+    t.integer "int_ans"
+    t.float "flt_ans"
+    t.string "str_ans"
+    t.uuid "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_answers_on_id", unique: true
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "papers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", default: "", null: false
+    t.text "description"
+    t.boolean "is_paid", default: true
+    t.integer "num_questions"
+    t.integer "year"
+    t.integer "round"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_papers_on_id", unique: true
+    t.index ["year", "round"], name: "index_papers_on_year_and_round", unique: true
+  end
+
+  create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "content"
+    t.integer "difficulty"
+    t.integer "type", null: false
+    t.integer "unit"
+    t.integer "mark"
+    t.uuid "paper_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["difficulty"], name: "index_questions_on_difficulty"
+    t.index ["id"], name: "index_questions_on_id", unique: true
+    t.index ["paper_id"], name: "index_questions_on_paper_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -78,4 +117,6 @@ ActiveRecord::Schema.define(version: 2018_07_11_163718) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "answers", "questions"
+  add_foreign_key "questions", "papers"
 end

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :answers
+  resources :questions
+  resources :papers
   get 'greetings/hello'
   mount_devise_token_auth_for 'User', at: 'auth'
 
