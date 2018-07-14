@@ -7,6 +7,5 @@ class Paper < ApplicationRecord
 
   validates :title,
             presence: true
-  validates :is_paid,
-            presence: true
+  validates_inclusion_of :is_paid, :in => [true, false]
 end

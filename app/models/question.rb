@@ -6,9 +6,9 @@ class Question < ApplicationRecord
   }
 
   belongs_to :paper
-  has_one :answer, dependent: :destroy
 
   validates :question_type,
             presence: true
+  validates_presence_of :answer
   validates_associated :paper
 end

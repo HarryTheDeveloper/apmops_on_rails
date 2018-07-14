@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_14_081528) do
+ActiveRecord::Schema.define(version: 2018_07_14_080301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -47,22 +47,10 @@ ActiveRecord::Schema.define(version: 2018_07_14_081528) do
     t.index ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true
   end
 
-  create_table "answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "question_type", null: false
-    t.integer "int_ans"
-    t.float "flt_ans"
-    t.string "str_ans"
-    t.uuid "question_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["id"], name: "index_answers_on_id", unique: true
-    t.index ["question_id"], name: "index_answers_on_question_id"
-  end
-
   create_table "papers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title", default: "", null: false
+    t.string "title", null: false
     t.text "description"
-    t.boolean "is_paid", default: true
+    t.boolean "is_paid", null: false
     t.integer "num_questions"
     t.integer "year"
     t.integer "round"
@@ -76,8 +64,9 @@ ActiveRecord::Schema.define(version: 2018_07_14_081528) do
     t.text "content"
     t.integer "difficulty"
     t.integer "question_type", null: false
-    t.integer "unit"
+    t.string "unit"
     t.integer "mark"
+    t.string "answer", null: false
     t.uuid "paper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -117,6 +106,5 @@ ActiveRecord::Schema.define(version: 2018_07_14_081528) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
-  add_foreign_key "answers", "questions"
   add_foreign_key "questions", "papers"
 end

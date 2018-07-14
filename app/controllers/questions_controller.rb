@@ -18,6 +18,10 @@ class QuestionsController < ApplicationController
   def create
     @question = @paper.questions.new(question_params)
 
+    puts "***HARRY***"
+    puts @paper
+    puts @question.question_type
+    puts "***HARRY***"
     if @question.save
       render json: @question, status: :created, location: @question
     else
@@ -51,6 +55,6 @@ class QuestionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def question_params
-      params.require(:question).permit(:content, :difficulty, :type, :unit, :mark, :paper_id)
+      params.require(:question).permit(:content, :difficulty, :question_type, :unit, :mark, :answer, :paper_id)
     end
 end
