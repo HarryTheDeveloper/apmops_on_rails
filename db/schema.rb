@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_15_073134) do
+ActiveRecord::Schema.define(version: 2018_07_15_075228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,6 +45,25 @@ ActiveRecord::Schema.define(version: 2018_07_15_073134) do
     t.index ["id"], name: "index_admins_on_id", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true
+  end
+
+  create_table "crackeds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "paper_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["paper_id"], name: "index_crackeds_on_paper_id"
+    t.index ["user_id"], name: "index_crackeds_on_user_id"
+  end
+
+  create_table "crackings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "current_question", default: 0, null: false
+    t.uuid "user_id"
+    t.uuid "paper_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["paper_id"], name: "index_crackings_on_paper_id"
+    t.index ["user_id"], name: "index_crackings_on_user_id"
   end
 
   create_table "papers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -115,6 +134,10 @@ ActiveRecord::Schema.define(version: 2018_07_15_073134) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "crackeds", "papers"
+  add_foreign_key "crackeds", "users"
+  add_foreign_key "crackings", "papers"
+  add_foreign_key "crackings", "users"
   add_foreign_key "purchases", "papers"
   add_foreign_key "purchases", "users"
   add_foreign_key "questions", "papers"
