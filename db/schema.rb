@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_15_075518) do
+ActiveRecord::Schema.define(version: 2018_07_15_075906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,6 +45,15 @@ ActiveRecord::Schema.define(version: 2018_07_15_075518) do
     t.index ["id"], name: "index_admins_on_id", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true
+  end
+
+  create_table "bookmarks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_bookmarks_on_question_id"
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
   create_table "crackeds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -143,6 +152,8 @@ ActiveRecord::Schema.define(version: 2018_07_15_075518) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "bookmarks", "questions"
+  add_foreign_key "bookmarks", "users"
   add_foreign_key "crackeds", "papers"
   add_foreign_key "crackeds", "users"
   add_foreign_key "crackings", "papers"

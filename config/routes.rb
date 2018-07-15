@@ -12,8 +12,11 @@ Rails.application.routes.draw do
   end
 
   resources :purchases, only: [:index, :create]
+
   resources :crackings, only: [:index, :create, :update]
   resources :crackeds,  only: [:index, :create]
   resources :solves,    only: :create
+
+  resources :bookmarks, only: [:index, :create, :destroy]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
