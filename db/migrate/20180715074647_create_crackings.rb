@@ -7,5 +7,8 @@ class CreateCrackings < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+
+    add_index :crackings, :id,                      unique: true
+    add_index :crackings, [:user_id, :paper_id],    unique: true
   end
 end

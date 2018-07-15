@@ -52,7 +52,9 @@ ActiveRecord::Schema.define(version: 2018_07_15_075906) do
     t.uuid "question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_bookmarks_on_id", unique: true
     t.index ["question_id"], name: "index_bookmarks_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_bookmarks_on_user_id_and_question_id", unique: true
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
@@ -61,7 +63,9 @@ ActiveRecord::Schema.define(version: 2018_07_15_075906) do
     t.uuid "paper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_crackeds_on_id", unique: true
     t.index ["paper_id"], name: "index_crackeds_on_paper_id"
+    t.index ["user_id", "paper_id"], name: "index_crackeds_on_user_id_and_paper_id", unique: true
     t.index ["user_id"], name: "index_crackeds_on_user_id"
   end
 
@@ -71,7 +75,9 @@ ActiveRecord::Schema.define(version: 2018_07_15_075906) do
     t.uuid "paper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_crackings_on_id", unique: true
     t.index ["paper_id"], name: "index_crackings_on_paper_id"
+    t.index ["user_id", "paper_id"], name: "index_crackings_on_user_id_and_paper_id", unique: true
     t.index ["user_id"], name: "index_crackings_on_user_id"
   end
 
@@ -93,7 +99,9 @@ ActiveRecord::Schema.define(version: 2018_07_15_075906) do
     t.uuid "paper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_purchases_on_id", unique: true
     t.index ["paper_id"], name: "index_purchases_on_paper_id"
+    t.index ["user_id", "paper_id"], name: "index_purchases_on_user_id_and_paper_id", unique: true
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
@@ -117,7 +125,9 @@ ActiveRecord::Schema.define(version: 2018_07_15_075906) do
     t.uuid "question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_solves_on_id", unique: true
     t.index ["question_id"], name: "index_solves_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_solves_on_user_id_and_question_id", unique: true
     t.index ["user_id"], name: "index_solves_on_user_id"
   end
 

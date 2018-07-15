@@ -6,5 +6,8 @@ class CreatePurchases < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+
+    add_index :purchases, :id,                      unique: true
+    add_index :purchases, [:user_id, :paper_id],    unique: true
   end
 end

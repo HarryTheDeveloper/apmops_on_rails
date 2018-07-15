@@ -1,10 +1,10 @@
 class PurchasesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_purchases, only: :index
   before_action :set_purchase, only: [:show, :update, :destroy]
 
   # GET /purchases
   def index
-    @purchases = Purchase.all
-
     render json: @purchases
   end
 
@@ -18,7 +18,7 @@ class PurchasesController < ApplicationController
     @purchase = Purchase.new(purchase_params)
 
     if @purchase.save
-      render json: @purchase, status: :created, location: @purchase
+      render json: @purchase, status: :created#, location: @purchase
     else
       render json: @purchase.errors, status: :unprocessable_entity
     end
@@ -39,6 +39,10 @@ class PurchasesController < ApplicationController
   end
 
   private
+    def set_purchases
+      @purchases = Purchase.where(:user_id => current_user.id)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_purchase
       @purchase = Purchase.find(params[:id])
@@ -46,6 +50,8 @@ class PurchasesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def purchase_params
-      params.require(:purchase).permit(:user_id, :paper_id)
+      params.require(:purchase).permit(:paper_id).merge(
+          user_id: current_user.id
+      )
     end
 end
