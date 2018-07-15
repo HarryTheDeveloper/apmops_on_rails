@@ -1,4 +1,9 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_admin!, only: [:create, :update, :destroy]
+
+  devise_token_auth_group :member, contains: [:user, :admin]
+  before_action :authenticate_member!, only: [:index, :show]
+
   before_action :set_paper, only: [:index, :create]
   before_action :set_question, only: [:show, :update, :destroy]
 
@@ -18,10 +23,6 @@ class QuestionsController < ApplicationController
   def create
     @question = @paper.questions.new(question_params)
 
-    puts "***HARRY***"
-    puts @paper
-    puts @question.question_type
-    puts "***HARRY***"
     if @question.save
       render json: @question, status: :created, location: @question
     else

@@ -1,4 +1,9 @@
 class PapersController < ApplicationController
+  before_action :authenticate_admin!, only: [:create, :update, :destroy]
+
+  devise_token_auth_group :member, contains: [:user, :admin]
+  before_action :authenticate_member!, only: [:index, :show]
+
   before_action :set_paper, only: [:show, :update, :destroy]
 
   # GET /papers
