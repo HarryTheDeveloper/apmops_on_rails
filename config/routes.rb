@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :questions, shallow: true
   end
 
-  resources :purchases, only: :create
+  resources :purchases, only: [:index, :create]
+  resources :crackings, only: [:index, :create, :update]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
