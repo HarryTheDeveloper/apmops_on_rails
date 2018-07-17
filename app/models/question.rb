@@ -26,7 +26,7 @@ class Question < ApplicationRecord
   end
 
   def image_url
-    # image.attachment.service_url if image.attached?
+    # image.service_url if image.attached?
     rails_blob_url(image) if image.attached?
   end
 end
