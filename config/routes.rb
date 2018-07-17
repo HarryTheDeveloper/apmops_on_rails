@@ -9,13 +9,13 @@ Rails.application.routes.draw do
 
   resources :papers do
     resources :questions, shallow: true
+    resources :solves,    only: [:index, :create], shallow: true
   end
 
   resources :purchases, only: [:index, :create]
 
   resources :crackings, only: [:index, :create, :update]
   resources :crackeds,  only: [:index, :create]
-  resources :solves,    only: :create
 
   resources :bookmarks, only: [:index, :create, :destroy]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -1,51 +1,59 @@
 class SolvesController < ApplicationController
-  before_action :set_solf, only: [:show, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_solves, only: :index
+  before_action :set_solve, only: [:show, :update, :destroy]
 
   # GET /solves
   def index
-    @solves = Solve.all
-
     render json: @solves
   end
 
   # GET /solves/1
   def show
-    render json: @solf
+    render json: @solve
   end
 
   # POST /solves
   def create
-    @solf = Solve.new(solf_params)
+    @solve = Solve.new(solve_params)
 
-    if @solf.save
-      render json: @solf, status: :created, location: @solf
+    if @solve.save
+      render json: @solve, status: :created#, location: @solve
     else
-      render json: @solf.errors, status: :unprocessable_entity
+      render json: @solve.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /solves/1
   def update
-    if @solf.update(solf_params)
-      render json: @solf
+    if @solve.update(solve_params)
+      render json: @solve
     else
-      render json: @solf.errors, status: :unprocessable_entity
+      render json: @solve.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /solves/1
   def destroy
-    @solf.destroy
+    @solve.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_solf
-      @solf = Solve.find(params[:id])
+    def set_solves
+      paper = Paper.find(params[:paper_id]) if Purchase.find_by_paper_id(params[:paper_id])
+      @solves = Solve.where("user_id = ? AND question_id IN (?)", current_user.id, paper.question_ids) if paper
     end
 
+    # Use callbacks to share common setup or constraints between actions.
+    def set_solve
+      @solve = Solve.where(:user_id => current_user.id).find(params[:id])
+    end
+
+
     # Only allow a trusted parameter "white list" through.
-    def solf_params
-      params.require(:solf).permit(:user_id, :question_id)
+    def solve_params
+      params.require(:solve).permit(:paper_id, :question_id).merge(
+          user_id: current_user.id
+      )
     end
 end
