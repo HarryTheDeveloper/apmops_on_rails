@@ -1,10 +1,10 @@
 class CrackedsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_crackeds, except: :create
   before_action :set_cracked, only: [:show, :update, :destroy]
 
   # GET /crackeds
   def index
-    @crackeds = Cracked.all
-
     render json: @crackeds
   end
 
@@ -18,7 +18,8 @@ class CrackedsController < ApplicationController
     @cracked = Cracked.new(cracked_params)
 
     if @cracked.save
-      render json: @cracked, status: :created, location: @cracked
+      delete_corresponding_cracking @cracked
+      render json: @cracked, status: :created#, location: @cracked
     else
       render json: @cracked.errors, status: :unprocessable_entity
     end
@@ -39,13 +40,24 @@ class CrackedsController < ApplicationController
   end
 
   private
+    def set_crackeds
+      @crackeds = Cracked.where(:user_id => current_user.id)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_cracked
-      @cracked = Cracked.find(params[:id])
+      @cracked = @crackeds.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def cracked_params
-      params.require(:cracked).permit(:user_id, :paper_id)
+      params.require(:cracked).permit(:paper_id).merge(
+          user_id: current_user.id
+      )
+    end
+
+    def delete_corresponding_cracking(cracked)
+      cracking = Cracking.find_by_user_id_and_paper_id(cracked.user_id, cracked.paper_id)
+      cracking.destroy
     end
 end
