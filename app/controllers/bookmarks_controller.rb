@@ -1,10 +1,10 @@
 class BookmarksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_bookmarks, except: :create
   before_action :set_bookmark, only: [:show, :update, :destroy]
 
   # GET /bookmarks
   def index
-    @bookmarks = Bookmark.all
-
     render json: @bookmarks
   end
 
@@ -39,13 +39,19 @@ class BookmarksController < ApplicationController
   end
 
   private
+    def set_bookmarks
+      @bookmarks = Bookmark.where(:user_id => current_user.id)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_bookmark
-      @bookmark = Bookmark.find(params[:id])
+      @bookmark = @bookmarks.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def bookmark_params
-      params.require(:bookmark).permit(:user_id, :question_id)
+      params.require(:bookmark).permit(:question_id).merge(
+          user_id: current_user.id
+      )
     end
 end
