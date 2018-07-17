@@ -40,7 +40,8 @@ class PurchasesController < ApplicationController
 
   private
     def set_purchases
-      @purchases = Purchase.where(:user_id => current_user.id)
+      # @purchases = Purchase.where(:user_id => current_user.id)
+      @purchases = current_user.purchases
     end
 
     # Use callbacks to share common setup or constraints between actions.

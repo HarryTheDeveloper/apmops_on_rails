@@ -40,7 +40,7 @@ class SolvesController < ApplicationController
 
   private
     def set_solves
-      paper = Paper.find(params[:paper_id]) if Purchase.find_by_paper_id(params[:paper_id])
+      paper = Paper.find(params[:paper_id]) if current_user.purchases.find_by_paper_id(params[:paper_id])
       @solves = Solve.where("user_id = ? AND question_id IN (?)", current_user.id, paper.question_ids) if paper
     end
 

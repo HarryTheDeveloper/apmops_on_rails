@@ -41,7 +41,8 @@ class CrackedsController < ApplicationController
 
   private
     def set_crackeds
-      @crackeds = Cracked.where(:user_id => current_user.id)
+      # @crackeds = Cracked.where(:user_id => current_user.id)
+      @crackeds = current_user.crackeds
     end
 
     # Use callbacks to share common setup or constraints between actions.

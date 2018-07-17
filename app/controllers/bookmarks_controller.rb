@@ -40,7 +40,8 @@ class BookmarksController < ApplicationController
 
   private
     def set_bookmarks
-      @bookmarks = Bookmark.where(:user_id => current_user.id)
+      # @bookmarks = Bookmark.where(:user_id => current_user.id)
+      @bookmarks = current_user.bookmarks
     end
 
     # Use callbacks to share common setup or constraints between actions.
