@@ -8,6 +8,8 @@ class Cracked < ApplicationRecord
   validate :paper_must_be_in_cracking, on: :create
   validate :paper_must_not_be_in_cracking, on: :update
 
+  default_scope -> { order(updated_at: :desc) }
+
   private
 
   def paper_must_be_purchased
