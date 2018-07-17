@@ -5,4 +5,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
   include DeviseTokenAuth::Concerns::User
+
+  has_many :bookmarks, dependent: :destroy
+  has_many :crackeds, dependent: :destroy
+  has_many :crackings, dependent: :destroy
+  has_many :purchases
+  has_many :solves, dependent: :destroy
 end

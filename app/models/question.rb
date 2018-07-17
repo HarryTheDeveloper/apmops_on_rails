@@ -7,6 +7,9 @@ class Question < ApplicationRecord
 
   belongs_to :paper
 
+  has_many :bookmarks, dependent: :destroy
+  has_many :solves, dependent: :destroy
+
   validates :question_type,
             presence: true
   validates_presence_of :answer
