@@ -11,12 +11,12 @@ class QuestionsController < ApplicationController
   def index
     @questions = @paper.questions
 
-    render json: @questions
+    render json: @questions.map {|q| q.convert_json}
   end
 
   # GET /questions/1
   def show
-    render json: @question
+    render json: @question.convert_json
   end
 
   # POST   /papers/:paper_id/questions
@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
     @question = @paper.questions.new(question_params)
 
     if @question.save
-      render json: @question, status: :created, location: @question
+      render json: @question.convert_json, status: :created, location: @question
     else
       render json: @question.errors, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions/1
   def update
     if @question.update(question_params)
-      render json: @question
+      render json: @question.convert_json
     else
       render json: @question.errors, status: :unprocessable_entity
     end
@@ -56,6 +56,7 @@ class QuestionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def question_params
-      params.require(:question).permit(:content, :difficulty, :question_type, :unit, :mark, :answer, :paper_id)
+      # params.require(:question).permit(:content, :difficulty, :question_type, :unit, :mark, :answer, :image, :paper_id)
+      params.permit(:content, :difficulty, :question_type, :unit, :mark, :answer, :image, :paper_id)
     end
 end
