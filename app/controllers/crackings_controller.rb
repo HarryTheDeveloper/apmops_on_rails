@@ -1,10 +1,10 @@
 class CrackingsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_crackings, except: :create
   before_action :set_cracking, only: [:show, :update, :destroy]
 
   # GET /crackings
   def index
-    @crackings = Cracking.all
-
     render json: @crackings
   end
 
@@ -39,13 +39,19 @@ class CrackingsController < ApplicationController
   end
 
   private
+    def set_crackings
+      @crackings = Cracking.where(:user_id => current_user.id)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_cracking
-      @cracking = Cracking.find(params[:id])
+      @cracking = @crackings.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def cracking_params
-      params.require(:cracking).permit(:current_question, :user_id, :paper_id)
+      params.require(:cracking).permit(:current_question, :paper_id).merge(
+          user_id: current_user.id
+      )
     end
 end
