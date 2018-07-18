@@ -7,16 +7,19 @@ Rails.application.routes.draw do
     # Define routes for Admin within this block.
   end
 
-  resources :papers do
-    resources :questions, shallow: true
-    resources :solves,    only: [:index, :create], shallow: true
+  scope module: :v1, constraints: ApiConstraints.new('v1', true) do
+    resources :papers do
+      resources :questions, shallow: true
+      resources :solves,    only: [:index, :create], shallow: true
+    end
+
+    resources :purchases, only: [:index, :create]
+
+    resources :crackings, only: [:index, :create, :update]
+    resources :crackeds,  only: [:index, :create]
+
+    resources :bookmarks, only: [:index, :create, :destroy]
   end
 
-  resources :purchases, only: [:index, :create]
-
-  resources :crackings, only: [:index, :create, :update]
-  resources :crackeds,  only: [:index, :create]
-
-  resources :bookmarks, only: [:index, :create, :destroy]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
