@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'greetings/hello'
-  mount_devise_token_auth_for 'User', at: 'auth'
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+      registrations:      'overrides/devise_token_auth/registrations',
+  }
 
   mount_devise_token_auth_for 'Admin', at: 'admin_auth'
   as :admin do
