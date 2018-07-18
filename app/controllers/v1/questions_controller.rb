@@ -57,8 +57,7 @@ module V1
 
     # Only allow a trusted parameter "white list" through.
     def question_params
-      # params.require(:question).permit(:content, :difficulty, :question_type, :unit, :mark, :answer, :image, :paper_id)
-      params.permit(:content, :difficulty, :question_type, :unit, :mark, :answer, :image, :paper_id)
+      params.require(:question).permit(:content, :difficulty, :question_type, :unit, :mark, :answer, :image, :paper_id)
     end
   end
 end
