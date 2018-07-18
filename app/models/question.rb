@@ -19,12 +19,6 @@ class Question < ApplicationRecord
   validates_presence_of :answer
   validates_associated :paper
 
-  def convert_json
-    as_json.merge!(
-        :image_url => image_url
-    )
-  end
-
   def image_url
     # image.service_url if image.attached?
     rails_blob_url(image) if image.attached?
