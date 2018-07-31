@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     # Define routes for Admin within this block.
   end
 
+  get 'user_info', to: 'user_info#info'
+
   scope module: :v1, constraints: ApiConstraints.new('v1', true) do
     resources :papers do
       resources :questions, shallow: true
