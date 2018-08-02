@@ -47,5 +47,5 @@ DeviseTokenAuth.setup do |config|
   # config.enable_standard_devise_support = false
 
   # TODO: Change redirect to our website
-  config.default_confirm_success_url = "https://www.google.com"
+  config.default_confirm_success_url = "http://www.ntugag.com/account-confirmation"
 end
