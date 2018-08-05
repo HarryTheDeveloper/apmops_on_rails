@@ -11,7 +11,9 @@ module V1
     def index
       @papers = Paper.all
 
-      render json: @papers
+      purchases = current_user.purchases
+
+      render json: @papers, each_serializer: PaperSerializer, is_admin: current_user.nil?, purchases: purchases
     end
 
     # GET /papers/1
