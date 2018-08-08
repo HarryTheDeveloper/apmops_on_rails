@@ -10,14 +10,25 @@ module V1
 
     # GET    /papers/:paper_id/questions
     def index
-      @questions = @paper.questions
-
-      render json: @questions
+      if current_user and !@paper.is_purchased?(current_user.purchases)
+            render json: {
+                paper: 'must be purchased'
+            }, status: :unprocessable_entity
+      else
+        @questions = @paper.questions
+        render json: @questions
+      end
     end
 
     # GET /questions/1
     def show
-      render json: @question
+      if current_user and !@question.paper.is_purchased?(current_user.purchases)
+        render json: {
+            paper: 'must be purchased'
+        }, status: :unprocessable_entity
+      else
+        render json: @question
+      end
     end
 
     # POST   /papers/:paper_id/questions
