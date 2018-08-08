@@ -3,7 +3,7 @@ class PaperSerializer < ActiveModel::Serializer
              :num_questions, :year, :round,
              :created_at, :updated_at
 
-  attribute :is_purchased?, if: :login?
+  attribute :is_purchased?, key: :is_purchased, if: :login?
 
   has_many :questions, if: :is_purchased?
 
