@@ -9,13 +9,7 @@ class PaperSerializer < ActiveModel::Serializer
 
   def is_purchased?
     !@instance_options[:purchases].nil? and
-    @instance_options[:purchases].each do |purchase|
-      if object.id == purchase.paper_id
-        return true
-      end
-    end
-
-    false
+    object.is_purchased? @instance_options[:purchases]
   end
 
   def login?

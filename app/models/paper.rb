@@ -11,4 +11,14 @@ class Paper < ApplicationRecord
   validates :title,
             presence: true
   validates_inclusion_of :is_paid, :in => [true, false]
+
+  def is_purchased?(purchases)
+    purchases.each do |purchase|
+      if id == purchase.paper_id
+        return true
+      end
+    end
+
+    false
+  end
 end

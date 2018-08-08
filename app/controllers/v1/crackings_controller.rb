@@ -41,9 +41,6 @@ module V1
 
     # GET /crackings/find
     def find
-      puts '***HARRY****'
-      puts params
-      puts '***HARRY****'
       cracking = @crackings.find_by_paper_id(params[:paper_id])
       render json: cracking
     end
