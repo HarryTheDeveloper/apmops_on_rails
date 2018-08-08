@@ -21,7 +21,11 @@ module V1
 
     # GET /papers/1
     def show
-      render json: @paper
+      if current_user
+        render json: @paper, serializer: PaperSerializer, purchases: current_user.purchases
+      else
+        render json: @paper
+      end
     end
 
     # POST /papers
