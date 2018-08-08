@@ -39,6 +39,15 @@ module V1
       @cracking.destroy
     end
 
+    # GET /crackings/find
+    def find
+      puts '***HARRY****'
+      puts params
+      puts '***HARRY****'
+      cracking = @crackings.find_by_paper_id(params[:paper_id])
+      render json: cracking
+    end
+
     private
     def set_crackings
       # @crackings = Cracking.where(:user_id => current_user.id)

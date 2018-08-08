@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     resources :purchases, only: [:index, :create]
 
     resources :crackings, only: [:index, :create, :update]
+    get 'crackings/find'
+
     resources :crackeds,  only: [:index, :create]
 
     resources :bookmarks, only: [:index, :create, :destroy]
