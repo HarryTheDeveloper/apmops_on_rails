@@ -8,11 +8,7 @@ class PaperSerializer < ActiveModel::Serializer
   has_many :questions
 
   def is_purchased
-    if @instance_options[:is_admin].nil?
-      return true
-    end
-
-    if @instance_options[:is_admin]
+    if @instance_options[:purchases].nil?
       return false
     end
 

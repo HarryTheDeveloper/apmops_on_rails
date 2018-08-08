@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 2018_07_17_134029) do
   end
 
   create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "number"
     t.text "content"
     t.integer "difficulty"
     t.integer "question_type", null: false
