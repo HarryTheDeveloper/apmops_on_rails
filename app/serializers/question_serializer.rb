@@ -1,5 +1,5 @@
 class QuestionSerializer < ActiveModel::Serializer
-  attributes :id, :content, :difficulty, :question_type,
+  attributes :id, :number, :content, :difficulty, :question_type,
              :unit, :mark, :answer, :created_at, :updated_at
 
   attributes :image_url, :image_url

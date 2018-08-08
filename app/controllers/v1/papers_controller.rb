@@ -54,7 +54,7 @@ module V1
 
     # Only allow a trusted parameter "white list" through.
     def paper_params
-      params.require(:paper).permit(:title, :description, :is_paid, :num_questions, :year, :round)
+      params.permit(:title, :description, :is_paid, :num_questions, :year, :round)
     end
   end
 end

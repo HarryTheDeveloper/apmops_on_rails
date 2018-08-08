@@ -52,7 +52,7 @@ module V1
 
     # Only allow a trusted parameter "white list" through.
     def cracking_params
-      params.require(:cracking).permit(:current_question, :paper_id).merge(
+      params.permit(:current_question, :paper_id).merge(
           user_id: current_user.id
       )
     end

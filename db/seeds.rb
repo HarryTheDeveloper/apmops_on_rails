@@ -7,12 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # seed 20 papers
-20.times do |index|
+17.times do |index|
   Paper.create(
-      title: "Apmops #{2000 + index}",
+      title: "Apmops #{2001 + index}",
       is_paid: index > 1,
       num_questions: 30,
-      year: 2000 + index,
+      year: 2001 + index,
       round: 0
   )
 end

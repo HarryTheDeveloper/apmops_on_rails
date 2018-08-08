@@ -1,6 +1,7 @@
 class CreateQuestions < ActiveRecord::Migration[5.2]
   def change
     create_table :questions, id: :uuid do |t|
+      t.integer :number
       t.text :content
       t.integer :difficulty
       t.integer :question_type, :null => false

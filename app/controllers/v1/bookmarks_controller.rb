@@ -52,7 +52,7 @@ module V1
 
     # Only allow a trusted parameter "white list" through.
     def bookmark_params
-      params.require(:bookmark).permit(:question_id).merge(
+      params.permit(:question_id).merge(
           user_id: current_user.id
       )
     end

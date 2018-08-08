@@ -52,7 +52,7 @@ module V1
 
     # Only allow a trusted parameter "white list" through.
     def purchase_params
-      params.require(:purchase).permit(:paper_id).merge(
+      params.permit(:paper_id).merge(
           user_id: current_user.id
       )
     end
