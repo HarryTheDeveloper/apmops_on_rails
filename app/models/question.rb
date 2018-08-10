@@ -16,7 +16,6 @@ class Question < ApplicationRecord
 
   validates :question_type,
             presence: true
-  validates_presence_of :answer
   validates_associated :paper
 
   def image_url
