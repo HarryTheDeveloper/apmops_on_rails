@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       resources :solves,    only: [:index, :create], shallow: true
     end
 
+    resources :shops, only: [:index, :show, :create, :destroy]
     resources :purchases, only: [:index, :create]
 
     resources :crackings, only: [:index, :create, :update]

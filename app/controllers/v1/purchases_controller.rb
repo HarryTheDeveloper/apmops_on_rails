@@ -19,6 +19,7 @@ module V1
       @purchase = Purchase.new(purchase_params)
 
       if @purchase.save
+        delete_corresponding_shop @purchase
         render json: @purchase, status: :created#, location: @purchase
       else
         render json: @purchase.errors, status: :unprocessable_entity
@@ -55,6 +56,11 @@ module V1
       params.permit(:paper_id).merge(
           user_id: current_user.id
       )
+    end
+
+    def delete_corresponding_shop(purchase)
+      shop = Shop.find_by_user_id_and_paper_id(purchase.user_id, purchase.paper_id)
+      shop.destroy if shop
     end
   end
 end

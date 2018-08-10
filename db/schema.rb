@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_10_050419) do
+ActiveRecord::Schema.define(version: 2018_08_10_072113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -142,6 +142,17 @@ ActiveRecord::Schema.define(version: 2018_08_10_050419) do
     t.index ["paper_id"], name: "index_questions_on_paper_id"
   end
 
+  create_table "shops", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "paper_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_shops_on_id", unique: true
+    t.index ["paper_id"], name: "index_shops_on_paper_id"
+    t.index ["user_id", "paper_id"], name: "index_shops_on_user_id_and_paper_id", unique: true
+    t.index ["user_id"], name: "index_shops_on_user_id"
+  end
+
   create_table "solves", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "question_id"
@@ -193,6 +204,8 @@ ActiveRecord::Schema.define(version: 2018_08_10_050419) do
   add_foreign_key "purchases", "papers"
   add_foreign_key "purchases", "users"
   add_foreign_key "questions", "papers"
+  add_foreign_key "shops", "papers"
+  add_foreign_key "shops", "users"
   add_foreign_key "solves", "questions"
   add_foreign_key "solves", "users"
 end

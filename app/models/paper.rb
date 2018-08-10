@@ -6,6 +6,7 @@ class Paper < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_many :crackeds, dependent: :destroy
   has_many :crackings, dependent: :destroy
+  has_many :shops, dependent: :destroy
   has_many :purchases
 
   validates :title,
