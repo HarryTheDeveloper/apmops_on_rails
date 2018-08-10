@@ -3,16 +3,20 @@ class PaperSerializer < ActiveModel::Serializer
              :num_questions, :year, :round,
              :created_at, :updated_at
 
+  attribute :is_shopped, if: :login?
   attribute :is_purchased?, key: :is_purchased, if: :login?
 
   has_many :questions, if: :is_purchased?
 
+  def is_shopped
+    object.is_shopped? current_user.shops if current_user
+  end
+
   def is_purchased?
-    !@instance_options[:purchases].nil? and
-    object.is_purchased? @instance_options[:purchases]
+    object.is_purchased? current_user.purchases if current_user
   end
 
   def login?
-    !@instance_options[:purchases].nil?
+    !current_user.nil?
   end
 end

@@ -14,12 +14,14 @@ class Paper < ApplicationRecord
   validates_inclusion_of :is_paid, :in => [true, false]
 
   def is_purchased?(purchases)
-    purchases.each do |purchase|
-      if id == purchase.paper_id
-        return true
-      end
+    purchases.reduce(false) do |is_purchased, purchase|
+      is_purchased or (id == purchase.paper_id)
     end
+  end
 
-    false
+  def is_shopped?(shops)
+    shops.reduce(false) do |is_purchased, shop|
+      is_purchased or (id == shop.paper_id)
+    end
   end
 end

@@ -11,21 +11,12 @@ module V1
     def index
       @papers = Paper.all
 
-      if current_user
-        render json: @papers, each_serializer: PaperSerializer, purchases: current_user.purchases
-      else
-        render json: @papers
-      end
-
+      render json: @papers
     end
 
     # GET /papers/1
     def show
-      if current_user
-        render json: @paper, serializer: PaperSerializer, purchases: current_user.purchases
-      else
-        render json: @paper
-      end
+      render json: @paper
     end
 
     # POST /papers
