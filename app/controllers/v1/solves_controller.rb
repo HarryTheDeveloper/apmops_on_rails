@@ -53,7 +53,7 @@ module V1
 
     # Only allow a trusted parameter "white list" through.
     def solve_params
-      params.permit(:paper_id, :question_id).merge(
+      params.permit(:question_id).merge(
           user_id: current_user.id
       )
     end

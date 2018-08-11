@@ -28,4 +28,10 @@ class Question < ApplicationRecord
       is_bookmark or (id == bookmark.question_id)
     end
   end
+
+  def is_solved?(solves)
+    solves.reduce(false) do |is_solved, solve|
+      is_solved or (id == solve.question_id)
+    end
+  end
 end
