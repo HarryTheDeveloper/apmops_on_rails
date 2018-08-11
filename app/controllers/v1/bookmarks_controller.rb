@@ -39,6 +39,12 @@ module V1
       @bookmark.destroy
     end
 
+    # GET /bookmarks/find
+    def find
+      bookmark = @bookmarks.find_by_question_id(params[:question_id])
+      render json: bookmark
+    end
+
     private
     def set_bookmarks
       # @bookmarks = Bookmark.where(:user_id => current_user.id)
