@@ -22,4 +22,10 @@ class Question < ApplicationRecord
     # image.service_url if image.attached?
     rails_blob_url(image) if image.attached?
   end
+
+  def is_bookmarked?(bookmarks)
+    bookmarks.reduce(false) do |is_bookmark, bookmark|
+      is_bookmark or (id == bookmark.question_id)
+    end
+  end
 end
