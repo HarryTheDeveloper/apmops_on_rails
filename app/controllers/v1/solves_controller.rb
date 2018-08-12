@@ -41,13 +41,15 @@ module V1
 
     private
     def set_solves
-      paper = Paper.find(params[:paper_id]) if current_user.purchases.find_by_paper_id(params[:paper_id])
-      @solves = Solve.where("user_id = ? AND question_id IN (?)", current_user.id, paper.question_ids) if paper
+      # paper = Paper.find(params[:paper_id]) if current_user.purchases.find_by_paper_id(params[:paper_id])
+      # @solves = Solve.where("user_id = ? AND question_id IN (?)", current_user.id, paper.question_ids) if paper
+      @solves = current_user.solves
     end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_solve
-      @solve = Solve.where(:user_id => current_user.id).find(params[:id])
+      # @solve = Solve.where(:user_id => current_user.id).find(params[:id])
+      @solve = @solves.find(params[:id])
     end
 
 

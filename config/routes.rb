@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   scope module: :v1, constraints: ApiConstraints.new('v1', true) do
     resources :papers do
       resources :questions, shallow: true
-      resources :solves,    only: [:index, :create], shallow: true
     end
 
     resources :shops, only: [:index, :show, :create, :destroy]
@@ -27,6 +26,8 @@ Rails.application.routes.draw do
 
     resources :bookmarks, only: [:index, :create, :destroy]
     get 'bookmarks/find'
+
+    resources :solves,    only: [:index, :create]
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
