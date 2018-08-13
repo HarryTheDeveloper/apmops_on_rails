@@ -19,7 +19,6 @@ module V1
       @cracked = Cracked.new(cracked_params)
 
       if @cracked.save
-        delete_corresponding_cracking @cracked
         render json: @cracked, status: :created#, location: @cracked
       else
         render json: @cracked.errors, status: :unprocessable_entity
@@ -56,11 +55,6 @@ module V1
       params.permit(:paper_id).merge(
           user_id: current_user.id
       )
-    end
-
-    def delete_corresponding_cracking(cracked)
-      cracking = Cracking.find_by_user_id_and_paper_id(cracked.user_id, cracked.paper_id)
-      cracking.destroy
     end
   end
 end
