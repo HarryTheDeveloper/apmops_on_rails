@@ -2,7 +2,7 @@ class Cracked < ApplicationRecord
   belongs_to :user
   belongs_to :paper
 
-  before_create :delete_corresponding_cracking
+  after_create :delete_corresponding_cracking
 
   validates_associated :user
   validates_associated :paper

@@ -2,7 +2,7 @@ class Purchase < ApplicationRecord
   belongs_to :user
   belongs_to :paper
 
-  before_create :delete_corresponding_shop
+  after_create :delete_corresponding_shop
 
   validates_associated :user
   validates_associated :paper
