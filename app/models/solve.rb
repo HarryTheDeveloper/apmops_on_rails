@@ -2,6 +2,8 @@ class Solve < ApplicationRecord
   belongs_to :user
   belongs_to :question
 
+  after_create :create_corresponding_shop
+
   validates_associated :user
   validates_associated :question
   validate :paper_must_be_purchased

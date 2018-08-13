@@ -14,5 +14,6 @@ class Purchase < ApplicationRecord
   def delete_corresponding_shop
     shop = Shop.find_by_user_id_and_paper_id(user_id, paper_id)
     shop.destroy if shop
+    true
   end
 end
