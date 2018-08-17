@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_13_060945) do
+ActiveRecord::Schema.define(version: 2018_08_17_044815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -121,6 +121,9 @@ ActiveRecord::Schema.define(version: 2018_08_13_060945) do
     t.uuid "paper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "payer_id"
+    t.string "payment_id"
+    t.string "payment_token"
     t.index ["id"], name: "index_purchases_on_id", unique: true
     t.index ["paper_id"], name: "index_purchases_on_paper_id"
     t.index ["user_id", "paper_id"], name: "index_purchases_on_user_id_and_paper_id", unique: true
