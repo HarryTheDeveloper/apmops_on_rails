@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'greetings/hello'
   mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+      confirmations:      'overrides/devise_token_auth/confirmations',
       registrations:      'overrides/devise_token_auth/registrations',
   }
 
